@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folha de Desenho</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="autor-barra" id="autor-barra">
+        <div class="autor-nome" id="autor-nome">Nome do Autor</div>
+        <input type="text" class="autor-input" id="autor-input">
+    </div>
+    <div class="container">
+        <!-- Aqui vamos gerar os quadrados -->
+    </div>
+    <div class="sidebar">
+        <div class="cor" style="background-color: #ff0000;"></div>
+        <div class="cor" style="background-color: #ff7f00;"></div>
+        <div class="cor" style="background-color: #ffff00;"></div>
+        <div class="cor" style="background-color: #00ff00;"></div>
+        <div class="cor" style="background-color: #0000ff;"></div>
+        <div class="cor" style="background-color: #4b0082;"></div>
+        <div class="cor" style="background-color: #9400d3;"></div>
+        <div class="cor" style="background-color: #ffffff;"></div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var container = document.querySelector('.container');
+            var corSelecionada = null;
+
+            // Loop para gerar os quadrados
+            for (var i = 0; i < 400; i++) { // Reduzindo para 400 quadrados
+                var quadro = document.createElement('div');
+                quadro.className = 'quadro';
+                container.appendChild(quadro);
+            }
+
+            // Adiciona evento de clique para cada quadrado
+            var quadros = document.querySelectorAll('.quadro');
+            quadros.forEach(function(quadro) {
+                quadro.addEventListener('click', function() {
+                    if (corSelecionada !== null) {
+                        this.style.backgroundColor = corSelecionada.style.backgroundColor;
+                    }
+                });
+            });
+
+            // Adiciona evento de clique para cada cor na barra lateral
+            var cores = document.querySelectorAll('.cor');
+            cores.forEach(function(cor) {
+                cor.addEventListener('click', function() {
+                    if (corSelecionada !== this) {
+                        corSelecionada?.classList.remove('selecionada');
+                        this.classList.add('selecionada');
+                        corSelecionada = this;
+                    }
+                });
+            });
+
+            // Adiciona evento de clique para editar o nome do autor
+            var autorNome = document.getElementById('autor-nome');
+            var autorInput = document.getElementById('autor-input');
+            autorNome.addEventListener('click', function() {
+                autorNome.style.display = 'none';
+                autorInput.value = autorNome.textContent;
+                autorInput.style.display = 'block';
+                autorInput.focus();
+            });
+            autorInput.addEventListener('blur', function() {
+                autorNome.textContent = autorInput.value;
+                autorInput.style.display = 'none';
+                autorNome.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
